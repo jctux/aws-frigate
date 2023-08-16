@@ -4,12 +4,11 @@ services:
     container_name: frigate
     privileged: true
     restart: unless-stopped
-    image: ghcr.io/blakeblackshear/frigate:stable-tensorrt
+    image: ghcr.io/blakeblackshear/frigate:stable
     shm_size: "2048mb" # update for your cameras based on calculation above
     group_add:
       - video 
     volumes:
-      - /var/lib/docker/trt-models:/trt-models
       - /etc/localtime:/etc/localtime
       - ./config/config.yml:/config/config.yml
       - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
@@ -17,7 +16,6 @@ services:
         tmpfs:
           size: 2000000000
     network_mode: host
-    runtime: nvidia
     environment:
       FRIGATE_RTSP_PASSWORD: "admin"
 
